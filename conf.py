@@ -1,0 +1,8 @@
+SSID = '' 
+AUTH_TOKEN = '' 
+FROM_NUMBER = ''
+TO_NUMBER = ''
+API_KEY = ''
+DEVICE_ID = ''
+FRAME_SIZE = 10
+MUL_FACTOR = 6
