@@ -1,43 +1,46 @@
 import conf, json, time, math, statistics,requests
 from boltiot import Sms, Bolt
 def compute_bounds(history_data,frame_size,factor):
-if len(history_data)<frame_size :
-return None
+    if len(history_data)<frame_size :
+        return None
 
-if len(history_data)>frame_size :
-    del history_data[0:len(history_data)-frame_size]
-Mn=statistics.mean(history_data)
-Variance=0
-for data in history_data :
-    Variance += math.pow((data-Mn),2)
-Zn = factor * math.sqrt(Variance / frame_size)
-High_bound = history_data[frame_size-1]+Zn
-Low_bound = history_data[frame_size-1]-Zn
-return [High_bound,Low_bound]
+    if len(history_data)>frame_size :
+        del history_data[0:len(history_data)-frame_size]
+
+    Mn=statistics.mean(history_data)
+    Variance=0
+    for data in history_data :
+        Variance += math.pow((data-Mn),2)
+
+    Zn = factor * math.sqrt(Variance / frame_size)
+    High_bound = history_data[frame_size-1]+Zn
+    Low_bound = history_data[frame_size-1]-Zn
+    return [High_bound,Low_bound]
+    
 mybolt = Bolt(conf.API_KEY, conf.DEVICE_ID)
 sms = Sms(conf.SSID, conf.AUTH_TOKEN, conf.TO_NUMBER, conf.FROM_NUMBER)
 history_data=[]
 
 
 def trigger_integromat_webhook():
-    URL = "https://hook.eu1.make.com/exjnstoh6cav9smmi1lrbailrxfd98k8" 
+    URL = "https://hook.eu1.make.com/ofnxfpfe1nrtdui3mws55kkwm66avkdw" 
     response = requests.request("GET", URL)
     print response.text
 
 while True:
-response = mybolt.analogRead(‘A0’)
-data = json.loads(response)
+    response = mybolt.analogRead(‘A0’)
+    data = json.loads(response)
 if data[‘success’] != 1:
-print(“There was an error while retriving the data.”)
-print(“This is the error:”+data[‘value’])
-time.sleep(10)
-continue
-print ("This is the value "+data[‘value’])
+    print(“There was an error while retriving the data.”)
+    print(“This is the error:”+data[‘value’])
+    time.sleep(10)
+    continue
+    print ("This is the value "+data[‘value’])
 sensor_value=0
 try:
-sensor_value = int(data[‘value’])
+    sensor_value = int(data[‘value’])
 except e:
-print("There was an error while parsing the response: ",e)
+    print("There was an error while parsing the response: ",e)
 continue
 
 bound = compute_bounds(history_data,conf.FRAME_SIZE,conf.MUL_FACTOR)
