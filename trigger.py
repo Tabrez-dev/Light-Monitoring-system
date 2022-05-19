@@ -30,7 +30,7 @@ while True:
     if data['success'] != 1:
         print("There was an error while retriving the data.")
         print("This is the error:"+data['value'])
-        time.sleep(10)
+        time.sleep(3)
         continue
 
     print ("This is the value "+data['value'])
@@ -46,7 +46,7 @@ while True:
         required_data_count=conf.FRAME_SIZE-len(history_data)
         print("Not enough data to compute Z-score. Need ",required_data_count," more data points")
         history_data.append(int(data['value']))
-        time.sleep(10)
+        time.sleep(3)
         continue
 
     try:
@@ -63,7 +63,7 @@ while True:
         history_data.append(sensor_value);
     except Exception as e:
         print ("Error",e)
-    time.sleep(10)
+    time.sleep(3)
 
 
 
