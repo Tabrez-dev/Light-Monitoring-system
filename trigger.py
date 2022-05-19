@@ -50,12 +50,13 @@ while True:
         continue
 
     try:
-        if sensor_value > bound[0] :
+        if sensor_value > bound[0]:
             trigger_integromat_webhook(sensor_value)
             print ("The light level increased suddenly. Sending an SMS.")
             response = sms.send_sms("Someone turned on the lights")
             print("This is the response ",response)
         elif sensor_value < bound[1]:
+            trigger_integromat_webhook(sensor_value)
             print ("The light level decreased suddenly. Sending an SMS.")
             response = sms.send_sms("Someone turned off the lights")
             print("This is the response ",response)
