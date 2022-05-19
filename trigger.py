@@ -2,7 +2,7 @@ import conf, json, time, math, statistics
 from boltiot import Sms, Bolt
 
 def trigger_integromat_webhook():
-    URL = "https://hook.eu1.make.com/exjnstoh6cav9smmi1lrbailrxfd98k8"
+    URL = "https://hook.eu1.make.com/pha3nc4qjgwshakscgojpbg469v8g1iu"
     response = requests.request("GET", URL)
     print(response.text)
 def compute_bounds(history_data,frame_size,factor):
@@ -51,6 +51,7 @@ while True:
 
     try:
         if sensor_value > bound[0] :
+            trigger_integromat_webhook(sensor_value)
             print ("The light level increased suddenly. Sending an SMS.")
             response = sms.send_sms("Someone turned on the lights")
             print("This is the response ",response)
