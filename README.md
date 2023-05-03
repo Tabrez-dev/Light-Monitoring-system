@@ -9,8 +9,8 @@ To learn the nitty gritty details about z score analysis and learn how to integr
 - Light Dependent resistor(LDR)
 - Resistor(10K ohm)
 - Connecting wires
-
-
+....
+s
 
 ### Software and Online services
 
